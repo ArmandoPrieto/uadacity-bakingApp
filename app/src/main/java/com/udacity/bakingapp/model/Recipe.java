@@ -11,6 +11,10 @@ public class Recipe {
     private int servings;
     private String image;
 
+    public Recipe() {
+
+    }
+
     public Recipe(int id, String name, List<Ingredient> ingredientsList, List<Step> stepsList, int servings, String image) {
         this.id = id;
         this.name = name;
