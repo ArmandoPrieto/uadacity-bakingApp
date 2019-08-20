@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,6 +23,7 @@ import com.udacity.bakingapp.dummy.DummyContent;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.utils.data.ApiClient;
 import com.udacity.bakingapp.utils.data.ApiInterface;
+import com.udacity.bakingapp.viewModel.BakingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class ItemListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     private List<Recipe> recipeList = new ArrayList<>();
-    ApiInterface apiInterface;
+
     RecyclerView.Adapter mAdapter;
 
     @Override
@@ -82,30 +84,15 @@ public class ItemListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        apiInterface = ApiClient.getCLient().create(ApiInterface.class);
-        getAllRecipes(ApiClient.ENDPOINT);
-
-    }
-
-    private void getAllRecipes(String endpoint){
-        Call<List<Recipe>> call = apiInterface.getRecipes(endpoint);
-        call.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.d(TAG, "onResponse: "+ response.body());
-
-                response.body().forEach(recipe -> recipeList.add(recipe));
-                mAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "onFailure: "+ t.getLocalizedMessage());
-            }
+        BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
+        model.getRecipes().observe(this, recipes -> {
+            recipeList.clear();
+            recipes.forEach(recipe -> recipeList.add(recipe));
+            mAdapter.notifyDataSetChanged();
         });
-
     }
+
+
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         mAdapter = new SimpleItemRecyclerViewAdapter(this, recipeList, mTwoPane);
