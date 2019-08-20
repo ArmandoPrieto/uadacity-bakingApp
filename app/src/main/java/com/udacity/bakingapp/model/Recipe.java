@@ -6,8 +6,8 @@ public class Recipe {
 
     private int id;
     private String name;
-    private List<Ingredient> ingredientsList;
-    private List<Step> stepsList;
+    private List<Ingredient> ingredients;
+    private List<Step> steps;
     private int servings;
     private String image;
 
@@ -15,11 +15,11 @@ public class Recipe {
 
     }
 
-    public Recipe(int id, String name, List<Ingredient> ingredientsList, List<Step> stepsList, int servings, String image) {
+    public Recipe(int id, String name, List<Ingredient> ingredients, List<Step> steps, int servings, String image) {
         this.id = id;
         this.name = name;
-        this.ingredientsList = ingredientsList;
-        this.stepsList = stepsList;
+        this.ingredients = ingredients;
+        this.steps = steps;
         this.servings = servings;
         this.image = image;
     }
@@ -40,20 +40,20 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<Ingredient> getIngredientsList() {
-        return ingredientsList;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientsList(List<Ingredient> ingredientsList) {
-        this.ingredientsList = ingredientsList;
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
-    public List<Step> getStepsList() {
-        return stepsList;
+    public List<Step> getSteps() {
+        return steps;
     }
 
-    public void setStepsList(List<Step> stepsList) {
-        this.stepsList = stepsList;
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
     }
 
     public int getServings() {

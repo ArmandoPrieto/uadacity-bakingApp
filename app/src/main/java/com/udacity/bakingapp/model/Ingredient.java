@@ -3,7 +3,7 @@ package com.udacity.bakingapp.model;
 public class Ingredient {
 
     private int id;
-    private int quantity;
+    private float quantity;
     private String measure;
     private String ingredient;
 
@@ -22,11 +22,11 @@ public class Ingredient {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
