@@ -60,7 +60,7 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        if (getArguments()!= null && getArguments().containsKey(ARG_ITEM_ID)) {
             int argId = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
             BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
             model.getRecipes().observe(this, recipes -> {
