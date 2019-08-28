@@ -25,10 +25,10 @@ public class ItemListActivityBasicTest {
 
     @Test
     public void when_item_clicked_shows_item_details(){
-        onView(ViewMatchers.withId(R.id.item_detail)).check(doesNotExist());
+        onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(doesNotExist());
         onView(ViewMatchers.withId(R.id.item_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
-        onView(ViewMatchers.withId(R.id.item_detail)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -36,12 +36,12 @@ public class ItemListActivityBasicTest {
         int screenLayoutSize = mActivityTestRule.getActivity()
                 .getResources()
                 .getConfiguration().screenLayout;
-        onView(ViewMatchers.withId(R.id.item_detail)).check(doesNotExist());
+        onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(doesNotExist());
         onView(ViewMatchers.withId(R.id.item_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
             if(screenLayoutSize < SCREENLAYOUT_SIZE_LARGE){
                 intended(hasExtraWithKey(ItemDetailFragment.ARG_ITEM_ID));
             }
-        onView(ViewMatchers.withId(R.id.item_detail)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(matches(isDisplayed()));
     }
 }
