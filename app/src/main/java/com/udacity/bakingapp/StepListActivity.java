@@ -166,9 +166,9 @@ public class StepListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final StepListActivity.StepListRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mStepShortDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-            holder.mStepDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-            holder.mStepVideoUrlTextView.setText(mStepValues.get(position).getVideoURL());
-            holder.mStepThumbnailUrlTextView.setText(mStepValues.get(position).getThumbnailURL());
+        //    holder.mStepDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
+        //    holder.mStepVideoUrlTextView.setText(mStepValues.get(position).getVideoURL());
+        //    holder.mStepThumbnailUrlTextView.setText(mStepValues.get(position).getThumbnailURL());
             //holder.itemView.setOnClickListener(mOnClickListener);
         }
 
@@ -180,9 +180,9 @@ public class StepListActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder {
 
             @BindView(R2.id.tv_step_short_description) TextView mStepShortDescriptionTextView;
-            @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
-            @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
-            @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailUrlTextView;
+         //   @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
+         //   @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
+         //   @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailUrlTextView;
 
             ViewHolder(View view) {
                 super(view);

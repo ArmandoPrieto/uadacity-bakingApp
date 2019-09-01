@@ -3,23 +3,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/steps_border">
+    android:background="@drawable/steps_border"
+    android:layout_marginVertical="@dimen/item_space_margin">
 
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.2">
     <TextView
         android:id="@+id/tv_step_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginVertical="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
-
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.8">
     <TextView
         android:id="@+id/tv_step_short_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginVertical="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
-
-    <TextView
+    </RelativeLayout>
+   <!-- <TextView
         android:id="@+id/tv_step_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,4 +49,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
+        -->
 </LinearLayout>
