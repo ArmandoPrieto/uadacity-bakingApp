@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.udacity.bakingapp.ItemListActivity;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.utils.data.ApiClient;
 import com.udacity.bakingapp.utils.data.ApiInterface;

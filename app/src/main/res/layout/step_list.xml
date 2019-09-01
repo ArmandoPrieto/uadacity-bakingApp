@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".ItemDetailFragment" >
+        tools:context=".StepDetailFragment" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,13 +31,13 @@
                 android:textIsSelectable="true"/>
 
         </LinearLayout>
-            <TextView
-                android:id="@+id/tv_recipe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                style="?android:attr/textAppearanceMedium"
-                android:textIsSelectable="true"/>
+        <TextView
+            android:id="@+id/tv_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            style="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="true"/>
 
         <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"

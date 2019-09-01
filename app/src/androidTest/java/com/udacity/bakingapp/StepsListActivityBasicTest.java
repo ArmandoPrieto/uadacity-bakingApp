@@ -1,6 +1,5 @@
 package com.udacity.bakingapp;
 
-import android.content.res.Configuration;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
@@ -18,10 +17,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class ItemListActivityBasicTest {
+public class StepsListActivityBasicTest {
     @Rule
-    public  IntentsTestRule <ItemListActivity> mActivityTestRule
-            = new  IntentsTestRule <>(ItemListActivity.class);
+    public  IntentsTestRule <RecipeListActivity> mActivityTestRule
+            = new  IntentsTestRule <>(RecipeListActivity.class);
 
     @Test
     public void when_item_clicked_shows_item_details(){
@@ -40,7 +39,7 @@ public class ItemListActivityBasicTest {
         onView(ViewMatchers.withId(R.id.item_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
             if(screenLayoutSize < SCREENLAYOUT_SIZE_LARGE){
-                intended(hasExtraWithKey(ItemDetailFragment.ARG_ITEM_ID));
+                intended(hasExtraWithKey(StepDetailFragment.ARG_ITEM_ID));
             }
         onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(matches(isDisplayed()));
     }

@@ -1,15 +1,18 @@
 package com.udacity.bakingapp;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,16 +31,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a {@link ItemListActivity}
- * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
- * on handsets.
+ * An activity representing a list of Items. This activity
+ * has different presentations for handset and tablet-size devices. On
+ * handsets, the activity presents a list of items, which when touched,
+ * lead to a {@link StepDetailActivity} representing
+ * item details. On tablets, the activity presents the list of items and
+ * item details side-by-side using two vertical panes.
  */
-public class ItemDetailFragment extends Fragment {
+public class StepListActivity extends AppCompatActivity {
+
+    private static final String TAG = StepListActivity.class.toString();
     /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
+     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * device.
      */
+    private boolean mTwoPane;
+    private List<Recipe> recipeList = new ArrayList<>();
+
+    RecyclerView.Adapter mAdapter;
+
     public static final String ARG_ITEM_ID = "item_id";
     private Recipe mItem;
     private TextView mRecipeNameTextView;
@@ -48,40 +60,40 @@ public class ItemDetailFragment extends Fragment {
     private List<Step> mStepList = new ArrayList<>();
     private RecyclerView.Adapter mStepListAdapter;
 
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ItemDetailFragment() {
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Activity activity = this.getActivity();
-        appBarLayout = activity.findViewById(R.id.toolbar_layout);
+        setContentView(R.layout.activity_step_list);
 
-    }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getTitle());
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.item_detail, container, false);
-        mRecipeServingsTextView = rootView.findViewById(R.id.tv_recipe_servings);
-        return rootView;
-    }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        View ingredientListRecyclerView = view.findViewById(R.id.rv_recipe_ingredients);
-        setupIngredientListRecyclerView((RecyclerView) ingredientListRecyclerView, view);
-        View stepListRecyclerView = view.findViewById(R.id.rv_recipe_steps);
-        setupStepListRecyclerView((RecyclerView) stepListRecyclerView, view);
+        if (findViewById(R.id.item_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-w900dp).
+            // If this view is present, then the
+            // activity should be in two-pane mode.
+            mTwoPane = true;
+        }
 
-        if (getArguments()!= null && getArguments().containsKey(ARG_ITEM_ID)) {
-            int argId = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
+        mRecipeServingsTextView = findViewById(R.id.tv_recipe_servings);
+        View ingredientListRecyclerView = findViewById(R.id.rv_recipe_ingredients);
+        setupIngredientListRecyclerView((RecyclerView) ingredientListRecyclerView);
+        View stepListRecyclerView = findViewById(R.id.rv_recipe_steps);
+        setupStepListRecyclerView((RecyclerView) stepListRecyclerView);
+
+        if (this.getIntent().hasExtra(ARG_ITEM_ID)) {
+            int argId = Integer.valueOf(this.getIntent().getStringExtra(ARG_ITEM_ID));
             BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
             model.getRecipes().observe(this, recipes -> {
                 recipes.stream().filter(recipe -> recipe.getId() == argId)
@@ -100,22 +112,35 @@ public class ItemDetailFragment extends Fragment {
                 mRecipeServingsTextView.setText(String.valueOf(mItem.getServings()));
             });
         }
+        if (findViewById(R.id.item_detail_container) != null) {
+            Bundle arguments = new Bundle();
+            StepDetailFragment fragment = new StepDetailFragment();
+            fragment.setArguments(arguments);
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+            mTwoPane = true;
+        }
+
+
+
     }
 
-    private void setupIngredientListRecyclerView(@NonNull RecyclerView recyclerView, View parent) {
-        mIngredientListAdapter = new IngredientListRecyclerViewAdapter(parent, mIngredientList);
+
+    private void setupIngredientListRecyclerView(@NonNull RecyclerView recyclerView) {
+        mIngredientListAdapter = new IngredientListRecyclerViewAdapter(this, mIngredientList);
         recyclerView.setAdapter(mIngredientListAdapter);
     }
 
-    private void setupStepListRecyclerView(@NonNull RecyclerView recyclerView, View parent) {
-        mStepListAdapter = new StepListRecyclerViewAdapter(parent, mStepList);
+    private void setupStepListRecyclerView(@NonNull RecyclerView recyclerView) {
+        mStepListAdapter = new StepListRecyclerViewAdapter(this, mStepList);
         recyclerView.setAdapter(mStepListAdapter);
     }
 
     public static class StepListRecyclerViewAdapter
-            extends RecyclerView.Adapter<ItemDetailFragment.StepListRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<StepListActivity.StepListRecyclerViewAdapter.ViewHolder> {
 
-        private final View mParentView;
+        private final StepListActivity mParentView;
         private final List<Step> mStepValues;
 
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -125,21 +150,21 @@ public class ItemDetailFragment extends Fragment {
             }
         };
 
-        StepListRecyclerViewAdapter(View parent, List<Step> step) {
+        StepListRecyclerViewAdapter(StepListActivity parent, List<Step> step) {
             mStepValues = step;
             mParentView = parent;
 
         }
 
         @Override
-        public ItemDetailFragment.StepListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public StepListActivity.StepListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recipe_steps_list_content, parent, false);
-            return new ItemDetailFragment.StepListRecyclerViewAdapter.ViewHolder(view);
+            return new StepListActivity.StepListRecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ItemDetailFragment.StepListRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final StepListActivity.StepListRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mStepShortDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
             holder.mStepDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
             holder.mStepVideoUrlTextView.setText(mStepValues.get(position).getVideoURL());
@@ -167,9 +192,9 @@ public class ItemDetailFragment extends Fragment {
     }
 
     public static class IngredientListRecyclerViewAdapter
-            extends RecyclerView.Adapter<ItemDetailFragment.IngredientListRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<StepListActivity.IngredientListRecyclerViewAdapter.ViewHolder> {
 
-        private final View mParentView;
+        private final StepListActivity mParentView;
         private final List<Ingredient> mIngredientValues;
 
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -179,20 +204,20 @@ public class ItemDetailFragment extends Fragment {
             }
         };
 
-        IngredientListRecyclerViewAdapter(View parent, List<Ingredient> ingredients) {
+        IngredientListRecyclerViewAdapter(StepListActivity parent, List<Ingredient> ingredients) {
             mIngredientValues = ingredients;
             mParentView = parent;
         }
 
         @Override
-        public ItemDetailFragment.IngredientListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public StepListActivity.IngredientListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recipe_ingredients_list_content, parent, false);
-            return new ItemDetailFragment.IngredientListRecyclerViewAdapter.ViewHolder(view);
+            return new StepListActivity.IngredientListRecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ItemDetailFragment.IngredientListRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final StepListActivity.IngredientListRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mIngredientNameTextView.setText(String.valueOf(mIngredientValues.get(position).getIngredient()));
             holder.mIngredientQuantityTextView.setText(String.valueOf(mIngredientValues.get(position).getQuantity()));
             holder.mIngredientMeasureTextView.setText(mIngredientValues.get(position).getMeasure());
@@ -217,4 +242,5 @@ public class ItemDetailFragment extends Fragment {
             }
         }
     }
+
 }

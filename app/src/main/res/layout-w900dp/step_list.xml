@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context=".StepListActivity">
+
+    <!--
+    This layout is a two-pane layout for the Items
+    master/detail flow.
+    
+    -->
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                style="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true"
+                android:text="@string/label_servings"/>
+
+            <TextView
+                android:id="@+id/tv_recipe_servings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                style="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true"/>
+
+            <TextView
+                android:id="@+id/tv_recipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                style="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recipe_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.udacity.myapplication.StepListActivity"
+                tools:listitem="@layout/recipe_ingredients_list_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recipe_steps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.udacity.myapplication.StepItemListActivity"
+                tools:listitem="@layout/recipe_steps_list_content" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/item_detail_container"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" />
+    </LinearLayout>
+</ScrollView>
