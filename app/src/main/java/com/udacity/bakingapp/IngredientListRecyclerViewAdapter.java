@@ -54,8 +54,7 @@ public class IngredientListRecyclerViewAdapter
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.tv_ingredient_name)
-        TextView mIngredientNameTextView;
+        @BindView(R2.id.tv_ingredient_name) TextView mIngredientNameTextView;
         @BindView(R2.id.tv_ingredient_quantity) TextView mIngredientQuantityTextView;
         @BindView(R2.id.tv_ingredient_measure) TextView mIngredientMeasureTextView;
 

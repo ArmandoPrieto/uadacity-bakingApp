@@ -39,7 +39,7 @@ public class StepsListActivityBasicTest {
         onView(ViewMatchers.withId(R.id.item_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
             if(screenLayoutSize < SCREENLAYOUT_SIZE_LARGE){
-                intended(hasExtraWithKey(StepDetailFragment.ARG_ITEM_ID));
+                intended(hasExtraWithKey(StepDetailFragment.ARG_RECIPE_ID));
             }
         onView(ViewMatchers.withId(R.id.tv_recipe_name)).check(matches(isDisplayed()));
     }

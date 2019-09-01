@@ -78,7 +78,7 @@ public class RecipeListActivity extends AppCompatActivity {
                 Recipe item = (Recipe) view.getTag();
                     Context context = view.getContext();
                     Intent intent = new Intent(context, StepListActivity.class);
-                    intent.putExtra(StepDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
+                    intent.putExtra(StepListActivity.ARG_RECIPE_ID, String.valueOf(item.getId()));
                     context.startActivity(intent);
 
             }

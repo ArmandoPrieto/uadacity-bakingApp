@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    android:text="This is just a test"
-    tools:context=".StepDetailFragment" />
+    android:orientation="horizontal"
+    android:background="@drawable/steps_border"
+    android:layout_marginVertical="@dimen/item_space_margin"
+    tools:context=".StepDetailFragment">
+    <TextView
+         android:id="@+id/tv_step_description"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/text_margin"
+         android:textAppearance="?attr/textAppearanceListItem" />
+
+     <TextView
+         android:id="@+id/tv_step_videoUrl"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/text_margin"
+         android:textAppearance="?attr/textAppearanceListItem" />
+     <TextView
+         android:id="@+id/tv_step_thumbnailUrl"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/text_margin"
+         android:textAppearance="?attr/textAppearanceListItem" />
+
+</LinearLayout>

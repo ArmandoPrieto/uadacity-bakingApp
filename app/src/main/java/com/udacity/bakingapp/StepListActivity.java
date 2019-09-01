@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class StepListActivity extends AppCompatActivity {
+public class StepListActivity extends AppCompatActivity implements StepListRecyclerViewAdapter.ViewHolder.OnRecipeStepListener{
 
     private static final String TAG = StepListActivity.class.toString();
     /**
@@ -50,7 +50,8 @@ public class StepListActivity extends AppCompatActivity {
 
     RecyclerView.Adapter mAdapter;
 
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_RECIPE_ID = "recipe_id";
+    public static final String ARG_STEP_ID = "step_id";
     private Recipe mItem;
     private TextView mRecipeNameTextView;
     private TextView mRecipeServingsTextView;
@@ -90,8 +91,8 @@ public class StepListActivity extends AppCompatActivity {
         View stepListRecyclerView = findViewById(R.id.rv_recipe_steps);
         setupStepListRecyclerView((RecyclerView) stepListRecyclerView);
 
-        if (this.getIntent().hasExtra(ARG_ITEM_ID)) {
-            int argId = Integer.valueOf(this.getIntent().getStringExtra(ARG_ITEM_ID));
+        if (this.getIntent().hasExtra(ARG_RECIPE_ID)) {
+            int argId = Integer.valueOf(this.getIntent().getStringExtra(ARG_RECIPE_ID));
             BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
             model.getRecipes().observe(this, recipes -> {
                 recipes.stream().filter(recipe -> recipe.getId() == argId)
@@ -130,9 +131,8 @@ public class StepListActivity extends AppCompatActivity {
 
         if(mTwoPane){
             Bundle arguments = new Bundle();
-            arguments.putInt(StepDetailFragment.ARG_LAYOUT_ID, R.layout.ingedients_detail);
-            arguments.putString(ARG_ITEM_ID,this.getIntent().getStringExtra(ARG_ITEM_ID));
-            StepDetailFragment fragment = new StepDetailFragment();
+            arguments.putString(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
+            IngredientDetailFragment fragment = new IngredientDetailFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
@@ -146,60 +146,23 @@ public class StepListActivity extends AppCompatActivity {
 
     }
 
-    public static class StepListRecyclerViewAdapter
-            extends RecyclerView.Adapter<StepListActivity.StepListRecyclerViewAdapter.ViewHolder> {
 
-        private final StepListActivity mParentView;
-        private final List<Step> mStepValues;
+    @Override
+    public void onRecipeStepClick(int stepId) {
+        if(mTwoPane){
+            Bundle arguments = new Bundle();
+            arguments.putString(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
+            arguments.putInt(ARG_STEP_ID, stepId);
+            StepDetailFragment fragment = new StepDetailFragment();
+            fragment.setArguments(arguments);
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
 
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        }else{
+            //Open in activity
 
-            }
-        };
 
-        StepListRecyclerViewAdapter(StepListActivity parent, List<Step> step) {
-            mStepValues = step;
-            mParentView = parent;
-
-        }
-
-        @Override
-        public StepListActivity.StepListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.recipe_steps_list_content, parent, false);
-            return new StepListActivity.StepListRecyclerViewAdapter.ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final StepListActivity.StepListRecyclerViewAdapter.ViewHolder holder, int position) {
-            holder.mStepShortDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-        //    holder.mStepDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-        //    holder.mStepVideoUrlTextView.setText(mStepValues.get(position).getVideoURL());
-        //    holder.mStepThumbnailUrlTextView.setText(mStepValues.get(position).getThumbnailURL());
-            //holder.itemView.setOnClickListener(mOnClickListener);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mStepValues.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            @BindView(R2.id.tv_step_short_description) TextView mStepShortDescriptionTextView;
-         //   @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
-         //   @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
-         //   @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailUrlTextView;
-
-            ViewHolder(View view) {
-                super(view);
-                ButterKnife.bind(this, view);
-            }
         }
     }
-
-
-
 }
