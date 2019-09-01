@@ -39,8 +39,11 @@ public class StepDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
-
+    public static final String ARG_LAYOUT_ID = "layout_id";
     private CollapsingToolbarLayout appBarLayout;
+    private List<Ingredient> mIngredientList = new ArrayList<>();
+    private RecyclerView.Adapter mIngredientListAdapter;
+    private Recipe mItem;
 
 
 
@@ -62,15 +65,54 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.step_detail, container, false);
-        //mRecipeServingsTextView = rootView.findViewById(R.id.tv_recipe_servings);
-        return rootView;
+        View rootView = null;
+        int layout = this.getArguments().getInt(ARG_LAYOUT_ID, R.layout.ingedients_detail);
+        switch (layout){
+            case R.layout.step_detail:
+                rootView = inflater.inflate(R.layout.step_detail, container, false);
+                break;
+            case R.layout.ingedients_detail:
+                rootView = inflater.inflate(R.layout.ingedients_detail, container, false);
+                break;
+        }
+       return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View ingredientListRecyclerView;
+        int layout = this.getArguments().getInt(ARG_LAYOUT_ID, R.layout.ingedients_detail);
+        switch (layout){
+            case R.layout.step_detail:
+                break;
+            case R.layout.ingedients_detail:
+                ingredientListRecyclerView = view.findViewById(R.id.rv_recipe_ingredients);
+                setupIngredientListRecyclerView((RecyclerView) ingredientListRecyclerView, view);
+                int argId = Integer.valueOf(this.getArguments().getString(ARG_ITEM_ID,"0"));
+                BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
+                model.getRecipes().observe(this, recipes -> {
+                    recipes.stream().filter(recipe -> recipe.getId() == argId)
+                            .findFirst()
+                            .ifPresent(recipe -> mItem = recipe);
+                    if(mItem!=null) {
+                        mIngredientList.clear();
+                        mItem.getIngredients().forEach(ingredient -> mIngredientList.add(ingredient));
+                        mIngredientListAdapter.notifyDataSetChanged();
+                    }
+                });
+                break;
+         }
 
+
+
+
+
+    }
+
+    private void setupIngredientListRecyclerView(@NonNull RecyclerView recyclerView, View view) {
+        mIngredientListAdapter = new IngredientListRecyclerViewAdapter(view, mIngredientList);
+        recyclerView.setAdapter(mIngredientListAdapter);
     }
 
 }

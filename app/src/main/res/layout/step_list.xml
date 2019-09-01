@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -31,26 +31,19 @@
                 android:textIsSelectable="true"/>
 
         </LinearLayout>
+
         <TextView
-            android:id="@+id/tv_recipe"
+            android:id="@+id/bt_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            style="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="true"/>
+            android:padding="@dimen/text_margin"
+            android:background="@drawable/ingredients_border"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:text="Ingredients"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:onClick="showIngredients"/>
 
-        <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/rv_recipe_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/recipe_ingredients_list_content" />
-
-        <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.recyclerview.widget.RecyclerView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rv_recipe_steps"
             android:layout_width="match_parent"

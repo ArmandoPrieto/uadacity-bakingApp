@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,50 +8,51 @@
     android:layout_marginRight="16dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
-    android:orientation="horizontal"
     android:showDividers="middle"
     tools:context=".StepListActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                style="?android:attr/textAppearanceMedium"
-                android:textIsSelectable="true"
-                android:text="@string/label_servings"/>
 
-            <TextView
-                android:id="@+id/tv_recipe_servings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                style="?android:attr/textAppearanceMedium"
-                android:textIsSelectable="true"/>
-
-            <TextView
-                android:id="@+id/tv_recipe"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                style="?android:attr/textAppearanceMedium"
-                android:textIsSelectable="true"/>
+                android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recipe_ingredients"
+                <TextView
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="@string/label_servings"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/tv_recipe_servings"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:textIsSelectable="true" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bt_ingredients"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:layoutManager="LinearLayoutManager"
-                tools:context="com.udacity.myapplication.StepListActivity"
-                tools:listitem="@layout/recipe_ingredients_list_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_margin"
+                android:background="@drawable/ingredients_border"
+                android:layout_marginHorizontal="@dimen/text_margin"
+                android:text="Ingredients"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:onClick="showIngredients"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recipe_steps"
@@ -66,15 +66,9 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-    <!--
-    This layout is a two-pane layout for the Items
-    master/detail flow.
-    
-    -->
-
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <FrameLayout
