@@ -61,7 +61,7 @@ public class StepDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(StepListActivity.ARG_RECIPE_ID,
                     getIntent().getStringExtra(StepListActivity.ARG_RECIPE_ID));
-            StepDetailFragment fragment = new StepDetailFragment();
+            IngredientDetailFragment fragment = new IngredientDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, fragment)

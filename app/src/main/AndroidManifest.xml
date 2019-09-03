@@ -12,7 +12,8 @@
         <activity
             android:name=".RecipeListActivity"
             android:label="@string/title_activity_recipe_list"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +23,9 @@
         <activity
             android:name=".StepDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName=".RecipeListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".StepListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.udacity.bakingapp.StepListActivity" />
@@ -32,10 +34,11 @@
             android:name=".StepListActivity"
             android:label="@string/title_item_detail"
             android:parentActivityName=".RecipeListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.udacity.bakingapp.StepListActivity" />
+                android:value="com.udacity.bakingapp.RecipeListActivity" />
         </activity>
     </application>
 

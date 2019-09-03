@@ -140,6 +140,9 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
 
         }else{
             //Open in activity
+            Intent intent = new Intent(this, StepDetailActivity.class);
+            intent.putExtra(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
+            startActivity(intent);
 
 
         }
