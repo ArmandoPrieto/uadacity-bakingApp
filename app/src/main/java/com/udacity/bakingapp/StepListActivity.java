@@ -119,9 +119,6 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
         }
     }
 
-
-
-
     private void setupStepListRecyclerView(@NonNull RecyclerView recyclerView) {
         mStepListAdapter = new StepListRecyclerViewAdapter(this, mStepList);
         recyclerView.setAdapter(mStepListAdapter);
@@ -137,18 +134,13 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
-
         }else{
             //Open in activity
             Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putExtra(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
             startActivity(intent);
-
-
         }
-
     }
-
 
     @Override
     public void onRecipeStepClick(int stepId) {
@@ -161,11 +153,12 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
-
         }else{
             //Open in activity
-
-
+            Intent intent = new Intent(this, StepDetailActivity.class);
+            intent.putExtra(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
+            intent.putExtra(ARG_STEP_ID, stepId);
+            startActivity(intent);
         }
     }
 }
