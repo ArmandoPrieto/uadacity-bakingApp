@@ -69,7 +69,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = this.getActivity();
-        appBarLayout = activity.findViewById(R.id.toolbar_layout);
+
 
     }
 

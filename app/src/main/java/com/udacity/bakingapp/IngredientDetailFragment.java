@@ -53,7 +53,7 @@ public class IngredientDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = this.getActivity();
-        appBarLayout = activity.findViewById(R.id.toolbar_layout);
+
 
     }
 
