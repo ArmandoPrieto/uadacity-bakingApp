@@ -39,19 +39,8 @@ public class RecipeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         View recyclerView = findViewById(R.id.item_list);
         setupRecyclerView((RecyclerView) recyclerView);
-
         BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
         model.getRecipes().observe(this, recipes -> {
             recipeList.clear();
@@ -76,10 +65,11 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Recipe item = (Recipe) view.getTag();
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, StepListActivity.class);
-                    intent.putExtra(StepListActivity.ARG_RECIPE_ID, String.valueOf(item.getId()));
-                    context.startActivity(intent);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, StepListActivity.class);
+                intent.putExtra(StepListActivity.ARG_RECIPE_ID, String.valueOf(item.getId()));
+                intent.putExtra(StepListActivity.ARG_RECIPE_TITLE, item.getName());
+                context.startActivity(intent);
 
             }
         };

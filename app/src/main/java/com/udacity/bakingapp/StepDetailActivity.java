@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import static com.udacity.bakingapp.StepListActivity.ARG_RECIPE_TITLE;
 import static com.udacity.bakingapp.StepListActivity.ARG_STEP_ID;
 
 /**
@@ -39,22 +40,16 @@ public class StepDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_detail);
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             Toolbar toolbar = findViewById(R.id.toolbar);
+            if(this.getIntent().hasExtra(ARG_RECIPE_TITLE)) {
+                toolbar.setTitle(this.getIntent().getStringExtra(ARG_RECIPE_TITLE));
+            }else{
+                toolbar.setTitle(this.getTitle());
+            }
             setSupportActionBar(toolbar);
         }
 
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
             if(this.getIntent().hasExtra(ARG_STEP_ID)) {
                 Bundle arguments = new Bundle();
                 arguments.putString(StepListActivity.ARG_RECIPE_ID,
@@ -83,13 +78,6 @@ public class StepDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
             NavUtils.navigateUpTo(this, new Intent(this, StepListActivity.class));
             return true;
         }

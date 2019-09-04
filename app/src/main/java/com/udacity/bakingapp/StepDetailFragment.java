@@ -32,6 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.udacity.bakingapp.R2.id.tv_no_player_step_description;
 import static com.udacity.bakingapp.StepListActivity.ARG_RECIPE_ID;
 import static com.udacity.bakingapp.StepListActivity.ARG_STEP_ID;
 
@@ -55,6 +56,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     @Nullable @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
     @Nullable @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
     @Nullable @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumnailTextView;
+    @Nullable @BindView(tv_no_player_step_description) TextView mNoPlayerStepDescriptionTextView;
     private static final String POSITION = "position";
 
 
@@ -132,13 +134,21 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                     mStepVideoUrlTextView.setText(mStep.getVideoURL());
                     mStepThumnailTextView.setText(mStep.getThumbnailURL());
                 }
-                if(exoPlayerView!=null) {
-                    if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
-                        mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
-                    } else {
-                        mediaPlayerImpl.play(mStep.getVideoURL());
-                    }
-                }
+             if(!mStep.getVideoURL().isEmpty()) {
+                 if (exoPlayerView != null) {
+                     if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
+                         mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
+                     } else {
+                         mediaPlayerImpl.play(mStep.getVideoURL());
+                     }
+                 }
+             }else{
+                 exoPlayerView.setVisibility(View.GONE);
+                 if(mNoPlayerStepDescriptionTextView !=null) {
+                     mNoPlayerStepDescriptionTextView.setVisibility(View.VISIBLE);
+                     mNoPlayerStepDescriptionTextView.setText(mStep.getDescription());
+                 }
+             }
             }
         });
 

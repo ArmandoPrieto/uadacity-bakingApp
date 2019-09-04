@@ -4,13 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.udacity.bakingapp.model.Step;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,10 +33,8 @@ public class StepListRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final StepListRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mStepShortDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-        //    holder.mStepDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
-        //    holder.mStepVideoUrlTextView.setText(mStepValues.get(position).getVideoURL());
-        //    holder.mStepThumbnailUrlTextView.setText(mStepValues.get(position).getThumbnailURL());
-        //holder.itemView.setOnClickListener(mOnClickListener);
+        if(mStepValues.get(position).getId()!=0)
+        holder.mStepStepIdTextView.setText("Step "+String.valueOf(mStepValues.get(position).getId())+":");
     }
 
     @Override
@@ -50,11 +44,9 @@ public class StepListRecyclerViewAdapter
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R2.id.tv_step_id) TextView mStepStepIdTextView;
         @BindView(R2.id.tv_step_short_description) TextView mStepShortDescriptionTextView;
         OnRecipeStepListener onRecipeStepListener;
-        //   @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
-        //   @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
-        //   @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailUrlTextView;
 
         ViewHolder(View view, OnRecipeStepListener onRecipeStepListener) {
             super(view);

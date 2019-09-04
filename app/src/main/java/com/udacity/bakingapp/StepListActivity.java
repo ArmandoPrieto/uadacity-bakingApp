@@ -41,22 +41,16 @@ import butterknife.ButterKnife;
 public class StepListActivity extends AppCompatActivity implements StepListRecyclerViewAdapter.ViewHolder.OnRecipeStepListener{
 
     private static final String TAG = StepListActivity.class.toString();
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private boolean mTwoPane;
     private List<Recipe> recipeList = new ArrayList<>();
-
     RecyclerView.Adapter mAdapter;
-
     public static final String ARG_RECIPE_ID = "recipe_id";
     public static final String ARG_STEP_ID = "step_id";
+    public static final String ARG_RECIPE_TITLE = "recipe_title";
     private Recipe mItem;
     private TextView mRecipeNameTextView;
     private TextView mRecipeServingsTextView;
     private CollapsingToolbarLayout appBarLayout;
-
     private List<Step> mStepList = new ArrayList<>();
     private RecyclerView.Adapter mStepListAdapter;
 
@@ -64,33 +58,20 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        if (findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
+        if(this.getIntent().hasExtra(ARG_RECIPE_TITLE)) {
+            toolbar.setTitle(this.getIntent().getStringExtra(ARG_RECIPE_TITLE));
+        }else{
+            toolbar.setTitle(this.getTitle());
         }
+        setSupportActionBar(toolbar);
 
+        if(findViewById(R.id.item_detail_container) != null) {
+              mTwoPane = true;
+        }
         mRecipeServingsTextView = findViewById(R.id.tv_recipe_servings);
-
         View stepListRecyclerView = findViewById(R.id.rv_recipe_steps);
         setupStepListRecyclerView((RecyclerView) stepListRecyclerView);
-
         if (this.getIntent().hasExtra(ARG_RECIPE_ID)) {
             int argId = Integer.valueOf(this.getIntent().getStringExtra(ARG_RECIPE_ID));
             BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
@@ -104,7 +85,6 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
                 if (appBarLayout != null) {
                     appBarLayout.setTitle(mItem.getName());
                 }
-
                 mRecipeServingsTextView.setText(String.valueOf(mItem.getServings()));
             });
         }
@@ -138,6 +118,7 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
             //Open in activity
             Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putExtra(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
+            intent.putExtra(ARG_RECIPE_TITLE,this.getIntent().getStringExtra(ARG_RECIPE_TITLE));
             startActivity(intent);
         }
     }
@@ -158,6 +139,7 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
             Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putExtra(ARG_RECIPE_ID,this.getIntent().getStringExtra(ARG_RECIPE_ID));
             intent.putExtra(ARG_STEP_ID, stepId);
+            intent.putExtra(ARG_RECIPE_TITLE,this.getIntent().getStringExtra(ARG_RECIPE_TITLE));
             startActivity(intent);
         }
     }
