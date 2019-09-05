@@ -1,11 +1,9 @@
 package com.udacity.bakingapp;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.player.MediaPlayer;
 import com.udacity.bakingapp.player.MediaPlayerImpl;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
 
@@ -55,7 +52,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private List<Step> mStepList = new ArrayList<>();
     @Nullable @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
     @Nullable @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
-    @Nullable @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumnailTextView;
+    @Nullable @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailTextView;
     @Nullable @BindView(tv_no_player_step_description) TextView mNoPlayerStepDescriptionTextView;
     private static final String POSITION = "position";
 
@@ -132,7 +129,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                 if(mStepDescriptionTextView !=null){
                     mStepDescriptionTextView.setText(mStep.getDescription());
                     mStepVideoUrlTextView.setText(mStep.getVideoURL());
-                    mStepThumnailTextView.setText(mStep.getThumbnailURL());
+                    mStepThumbnailTextView.setText(mStep.getThumbnailURL());
                 }
              if(!mStep.getVideoURL().isEmpty()) {
                  if (exoPlayerView != null) {
@@ -149,6 +146,8 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                      mNoPlayerStepDescriptionTextView.setText(mStep.getDescription());
                  }
              }
+
+
             }
         });
 
