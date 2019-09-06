@@ -1,4 +1,4 @@
-package com.udacity.bakingapp;
+package com.udacity.bakingapp.widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -7,15 +7,10 @@ import android.content.Intent;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.utils.data.ApiClient;
 import com.udacity.bakingapp.utils.data.ApiInterface;
-import com.udacity.bakingapp.viewModel.BakingViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

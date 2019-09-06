@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
-    android:padding="@dimen/widget_margin">
+
+    android:padding="@dimen/widget_margin"
+    android:background="@drawable/layout_bg_round">
 
 
     <ViewFlipper
@@ -11,13 +12,6 @@
         android:id="@+id/view_flipper"
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right">
-
-
-
-
-
-
-
     </ViewFlipper>
 
        <Button
@@ -27,6 +21,7 @@
         android:text="Next recipe"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/button_margin" />
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_marginTop="@dimen/button_margin" />
 
 </RelativeLayout>

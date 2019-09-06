@@ -8,13 +8,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Title"
-        android:textColor="#E9E9E9"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_recipe_ingredients_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
         android:text="Ingredient 1" />
 
 </LinearLayout>

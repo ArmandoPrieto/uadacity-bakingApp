@@ -41,7 +41,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.udacity.bakingapp.RecipeListActivity" />
         </activity>
-        <receiver android:name=".BakingAppWidgetProvider">
+        <receiver android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -52,7 +52,7 @@
         </receiver>
 
         <service
-            android:name=".BakingAppWidgetIntentService"
+            android:name=".widget.BakingAppWidgetIntentService"
             android:exported="false"></service>
     </application>
 
