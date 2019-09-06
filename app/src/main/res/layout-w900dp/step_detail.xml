@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".StepDetailFragment">
 
@@ -18,17 +19,12 @@
          android:layout_margin="@dimen/text_margin"
          android:textAppearance="?attr/textAppearanceListItem" />
 
-     <TextView
-         android:id="@+id/tv_step_videoUrl"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/text_margin"
-         android:textAppearance="?attr/textAppearanceListItem" />
-     <TextView
-         android:id="@+id/tv_step_thumbnailUrl"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/text_margin"
-         android:textAppearance="?attr/textAppearanceListItem" />
+
+    <ImageView
+        android:id="@+id/iv_step_thumbnailUrl"
+        android:layout_width="250dp"
+        android:layout_height="159dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/baking_image" />
 
 </LinearLayout>

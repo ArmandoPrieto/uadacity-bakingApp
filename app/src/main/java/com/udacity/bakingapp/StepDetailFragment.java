@@ -13,11 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.player.MediaPlayerImpl;
@@ -44,6 +47,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
+    private static final String TAG = StepDetailFragment.class.toString();
     private PlayerView exoPlayerView;
     private MediaPlayerImpl mediaPlayerImpl;
     private CollapsingToolbarLayout appBarLayout;
@@ -51,8 +55,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private Step mStep;
     private List<Step> mStepList = new ArrayList<>();
     @Nullable @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
-    @Nullable @BindView(R2.id.tv_step_videoUrl) TextView mStepVideoUrlTextView;
-    @Nullable @BindView(R2.id.tv_step_thumbnailUrl) TextView mStepThumbnailTextView;
+    @Nullable @BindView(R2.id.iv_step_thumbnailUrl) ImageView mStepThumbnailImageView;
     @Nullable @BindView(tv_no_player_step_description) TextView mNoPlayerStepDescriptionTextView;
     private static final String POSITION = "position";
 
@@ -128,24 +131,30 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             if(mStep!=null){
                 if(mStepDescriptionTextView !=null){
                     mStepDescriptionTextView.setText(mStep.getDescription());
-                    mStepVideoUrlTextView.setText(mStep.getVideoURL());
-                    mStepThumbnailTextView.setText(mStep.getThumbnailURL());
                 }
-             if(!mStep.getVideoURL().isEmpty()) {
-                 if (exoPlayerView != null) {
-                     if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
-                         mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
-                     } else {
-                         mediaPlayerImpl.play(mStep.getVideoURL());
-                     }
-                 }
-             }else{
-                 exoPlayerView.setVisibility(View.GONE);
-                 if(mNoPlayerStepDescriptionTextView !=null) {
-                     mNoPlayerStepDescriptionTextView.setVisibility(View.VISIBLE);
-                     mNoPlayerStepDescriptionTextView.setText(mStep.getDescription());
-                 }
-             }
+                if(!mStep.getThumbnailURL().isEmpty()){
+                    try {
+                        Picasso.get().load(mStep.getThumbnailURL()).into(mStepThumbnailImageView);
+                    }catch (Exception e){
+                        Log.d(TAG, "Error loading image");
+                    }
+                }
+                if(!mStep.getVideoURL().isEmpty()) {
+                    if (exoPlayerView != null) {
+                        if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
+                        mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
+                        } else {
+                        mediaPlayerImpl.play(mStep.getVideoURL());
+                        }
+                    }
+                }else{
+                    exoPlayerView.setVisibility(View.GONE);
+                        if(mNoPlayerStepDescriptionTextView !=null) {
+                        mNoPlayerStepDescriptionTextView.setVisibility(View.VISIBLE);
+                        mStepThumbnailImageView.setVisibility(View.VISIBLE);
+                        mNoPlayerStepDescriptionTextView.setText(mStep.getDescription());
+                        }
+                }
 
 
             }

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
+import com.udacity.bakingapp.widget.BakingAppWidgetIntentService;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +15,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,8 +30,8 @@ import butterknife.ButterKnife;
 
 public class RecipeListActivity extends AppCompatActivity {
 
+    private static final String TAG = RecipeListActivity.class.toString();
     private List<Recipe> recipeList = new ArrayList<>();
-
     RecyclerView.Adapter mAdapter;
 
 
@@ -90,7 +94,14 @@ public class RecipeListActivity extends AppCompatActivity {
         public void onBindViewHolder(final RecipeListActivity.RecipeListRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
             holder.mContentView.setText(mValues.get(position).getName());
-
+            if(!mValues.get(position).getImage().isEmpty()){
+                try {
+                    Picasso.get().load(mValues.get(position).getImage()).into(holder.mImageView);
+                }catch (Exception e){
+                    Log.d(TAG, "Error loading image");
+                    holder.mImageView.setImageResource(R.drawable.baking_image);
+                }
+            }
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
         }
@@ -104,6 +115,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
             @BindView(R2.id.id_text) TextView mIdView;
             @BindView(R2.id.content) TextView mContentView;
+            @BindView(R2.id.iv_baking_image) ImageView mImageView;
 
             ViewHolder(View view) {
                 super(view);
