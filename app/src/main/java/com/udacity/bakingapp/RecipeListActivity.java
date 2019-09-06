@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
 
@@ -104,8 +102,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            @BindView(R2.id.id_text)
-            TextView mIdView;
+            @BindView(R2.id.id_text) TextView mIdView;
             @BindView(R2.id.content) TextView mContentView;
 
             ViewHolder(View view) {

@@ -6,6 +6,6 @@
     <string name="title_recipedetail_list">recipeDetails</string>
     <string name="title_recipedetail_detail">recipeDetail Detail</string>
     <string name="thumbnail">thumbnail</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Baking App</string>
     <string name="add_widget">Add widget</string>
 </resources>
