@@ -9,6 +9,12 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.udacity.bakingapp.model.Ingredient;
+import com.udacity.bakingapp.model.Recipe;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * Implementation of App Widget functionality.
@@ -16,27 +22,31 @@ import android.widget.Toast;
 public class BakingAppWidgetProvider extends AppWidgetProvider {
 
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, List<Recipe> recipeList,
+                                int[] appWidgetIds) {
          // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
-        views.setOnClickPendingIntent(R.id.bt_show_next_recipe,
-                getPendingSelfIntent(context, AppWidgetManager.ACTION_APPWIDGET_UPDATE, appWidgetId));
-        for(int i=0; i<3;i++){
-            RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_recipe);
-            view.setTextViewText(R.id.tv_recipe_name, "This is the recipe name "+i);
-            view.setTextViewText(R.id.tv_recipe_ingredients_list, "Ingredient 2, Ingredient 3, Ingredient 4, Ingredient 5");
-            views.addView(R.id.view_flipper,view);
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
+            views.setOnClickPendingIntent(R.id.bt_show_next_recipe,
+                    getPendingSelfIntent(context, AppWidgetManager.ACTION_APPWIDGET_UPDATE, appWidgetId));
+            for(Recipe recipe : recipeList){
+                RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_recipe);
+                view.setTextViewText(R.id.tv_recipe_name, recipe.getName());
+                view.setTextViewText(R.id.tv_recipe_ingredients_list,
+                        recipe.getIngredients().stream()
+                                    .map(Ingredient::getIngredient)
+                                    .collect(Collectors.joining(", ")));
+                views.addView(R.id.view_flipper,view);
+            }
+            // Instruct the widget manager to update the widget
+            appWidgetManager.updateAppWidget(appWidgetId, views);
         }
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+        BakingAppWidgetIntentService.startActionLoadRecipe(context);
     }
 
     @Override
