@@ -2,36 +2,26 @@ package com.udacity.bakingapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.player.MediaPlayerImpl;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import static com.udacity.bakingapp.R2.id.tv_no_player_step_description;
 import static com.udacity.bakingapp.StepListActivity.ARG_RECIPE_ID;
 import static com.udacity.bakingapp.StepListActivity.ARG_STEP_ID;
@@ -53,7 +43,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private CollapsingToolbarLayout appBarLayout;
     private Recipe mItem;
     private Step mStep;
-    private List<Step> mStepList = new ArrayList<>();
     @Nullable @BindView(R2.id.tv_step_description) TextView mStepDescriptionTextView;
     @Nullable @BindView(R2.id.iv_step_thumbnailUrl) ImageView mStepThumbnailImageView;
     @Nullable @BindView(tv_no_player_step_description) TextView mNoPlayerStepDescriptionTextView;
@@ -71,8 +60,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = this.getActivity();
-
-
     }
 
     @Override
@@ -136,15 +123,19 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                     try {
                         Picasso.get().load(mStep.getThumbnailURL()).into(mStepThumbnailImageView);
                     }catch (Exception e){
-                        Log.d(TAG, "Error loading image");
+                        Log.d(TAG, getString(R.string.error_loading_image));
                     }
                 }
                 if(!mStep.getVideoURL().isEmpty()) {
                     if (exoPlayerView != null) {
-                        if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
-                        mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
-                        } else {
-                        mediaPlayerImpl.play(mStep.getVideoURL());
+                        try {
+                            if (savedInstanceState != null && savedInstanceState.getLong(POSITION, 0L) != 0L) {
+                            mediaPlayerImpl.playFrom(mStep.getVideoURL(), savedInstanceState.getLong(POSITION));
+                            } else {
+                            mediaPlayerImpl.play(mStep.getVideoURL());
+                            }
+                        }catch (Exception e){
+                            Log.d(TAG, getString(R.string.error_loading_video));
                         }
                     }
                 }else{
@@ -155,47 +146,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                         mNoPlayerStepDescriptionTextView.setText(mStep.getDescription());
                         }
                 }
-
-
             }
         });
-
     }
-
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-
-    }
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        switch (playbackState) {
-            case Player.STATE_BUFFERING:
-                //You can use progress dialog to show user that video is preparing or buffering so please wait
-                break;
-            case Player.STATE_IDLE:
-                //idle state
-                break;
-            case Player.STATE_READY:
-                // dismiss your dialog here because our video is ready to play now
-                break;
-            case Player.STATE_ENDED:
-                // do your processing after ending of video
-                break;
-        }
-
-    }
-
-    @Override
-    public void onPositionDiscontinuity(int reason) {
-
-    }
-
-
-
 }
