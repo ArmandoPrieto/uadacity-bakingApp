@@ -37,7 +37,6 @@ public class IngredientListRecyclerViewAdapter
         holder.mIngredientNameTextView.setText(String.valueOf(mIngredientValues.get(position).getIngredient()));
         holder.mIngredientQuantityTextView.setText(String.valueOf(mIngredientValues.get(position).getQuantity()));
         holder.mIngredientMeasureTextView.setText(mIngredientValues.get(position).getMeasure());
-        //holder.itemView.setOnClickListener(mOnClickListener);
     }
 
     @Override
@@ -50,7 +49,6 @@ public class IngredientListRecyclerViewAdapter
         @BindView(R2.id.tv_ingredient_name) TextView mIngredientNameTextView;
         @BindView(R2.id.tv_ingredient_quantity) TextView mIngredientQuantityTextView;
         @BindView(R2.id.tv_ingredient_measure) TextView mIngredientMeasureTextView;
-
 
         ViewHolder(View view) {
             super(view);
