@@ -13,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
     private static final String TAG = RecipeListActivity.class.toString();
     private List<Recipe> recipeList = new ArrayList<>();
-    RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
@@ -54,8 +57,21 @@ public class RecipeListActivity extends AppCompatActivity {
 
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            int numberOfColumns = calculateNoOfColumns(320);
+            mLayoutManager = new GridLayoutManager(this, numberOfColumns);
+            recyclerView.setLayoutManager(mLayoutManager);
+        }
+
         mAdapter = new RecipeListActivity.RecipeListRecyclerViewAdapter(this, recipeList);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private int calculateNoOfColumns(float columnWidthDp) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+        return (int) (screenWidthDp / columnWidthDp + 0.5); // +0.5 for correct rounding to int.
     }
 
     public static class RecipeListRecyclerViewAdapter
