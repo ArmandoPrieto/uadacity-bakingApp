@@ -20,13 +20,6 @@ public class IngredientListRecyclerViewAdapter
     private final View mParentView;
     private final List<Ingredient> mIngredientValues;
 
-    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
-    };
-
     IngredientListRecyclerViewAdapter(View parent, List<Ingredient> ingredients) {
         mIngredientValues = ingredients;
         mParentView = parent;

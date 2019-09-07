@@ -80,12 +80,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         exoPlayerView.getPlayer().release();

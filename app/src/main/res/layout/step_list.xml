@@ -39,7 +39,7 @@
             android:padding="@dimen/text_margin"
             android:background="@drawable/ingredients_border"
             android:layout_marginHorizontal="@dimen/text_margin"
-            android:text="Ingredients"
+            android:text="@string/ingredients"
             android:textAppearance="?attr/textAppearanceListItem"
             android:onClick="showIngredients"/>
 

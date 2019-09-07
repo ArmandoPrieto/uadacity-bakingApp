@@ -34,7 +34,7 @@ public class StepListRecyclerViewAdapter
     public void onBindViewHolder(final StepListRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mStepShortDescriptionTextView.setText(mStepValues.get(position).getShortDescription());
         if(mStepValues.get(position).getId()!=0)
-        holder.mStepStepIdTextView.setText("Step "+String.valueOf(mStepValues.get(position).getId())+":");
+        holder.mStepStepIdTextView.setText("Step "+ mStepValues.get(position).getId() +":");
     }
 
     @Override

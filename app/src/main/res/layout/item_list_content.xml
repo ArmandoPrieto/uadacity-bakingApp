@@ -36,6 +36,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_marginRight="@dimen/button_margin"
-        app:srcCompat="@drawable/baking_image" />
+        app:srcCompat="@drawable/baking_image"
+        android:contentDescription="@string/baking_image"/>
 
 </LinearLayout>

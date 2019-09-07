@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
+    android:layout_marginStart="16dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:showDividers="middle"
@@ -49,7 +49,7 @@
                 android:padding="@dimen/text_margin"
                 android:background="@drawable/ingredients_border"
                 android:layout_marginHorizontal="@dimen/text_margin"
-                android:text="Ingredients"
+                android:text="@string/ingredients"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:onClick="showIngredients"/>
 

@@ -53,9 +53,8 @@
 
         <service
             android:name=".widget.BakingAppWidgetIntentService"
-            android:exported="false"></service>
+            android:exported="false"/>
+
     </application>
-
     <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>

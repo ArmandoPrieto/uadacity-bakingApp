@@ -76,7 +76,7 @@ public class IngredientDetailFragment extends Fragment {
                     .ifPresent(recipe -> mItem = recipe);
             if(mItem!=null) {
                 mIngredientList.clear();
-                mItem.getIngredients().forEach(ingredient -> mIngredientList.add(ingredient));
+                mIngredientList.addAll(mItem.getIngredients());
                 mIngredientListAdapter.notifyDataSetChanged();
             }
         });

@@ -29,7 +29,7 @@ public class BakingAppWidgetIntentService extends IntentService {
     private static final String TAG =BakingAppWidgetIntentService.class.toString();
     private static final String ACTION_LOAD_RECIPES = "com.udacity.bakingapp.action.LOAD_RECIPES";
     List<Recipe> recipeList;
-    private ApiInterface apiInterface = ApiClient.getCLient().create(ApiInterface.class);;
+    private ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
     public BakingAppWidgetIntentService() {
         super("BakingAppWidgetIntentService");

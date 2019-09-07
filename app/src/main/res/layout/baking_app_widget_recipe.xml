@@ -7,10 +7,10 @@
         android:id="@+id/tv_recipe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recipe Title"
+        android:text="@string/recipe_title"
         android:textColor="@color/colorAccent"
         android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
         android:textSize="18sp" />
 
     <TextView
@@ -21,6 +21,6 @@
         android:layout_marginRight="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginBottom="@dimen/text_margin"
-        android:text="Ingredient 1" />
+        android:text="@string/ingredient_1" />
 
 </LinearLayout>

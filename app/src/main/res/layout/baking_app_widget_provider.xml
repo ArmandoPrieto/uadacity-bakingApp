@@ -18,7 +18,7 @@
         android:id="@+id/bt_show_next_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next recipe"
+        android:text="@string/next_recipe"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"

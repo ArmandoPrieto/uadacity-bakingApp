@@ -23,7 +23,7 @@ public class BakingViewModel extends ViewModel {
     private static final String TAG = BakingViewModel.class.toString();
 
     private MutableLiveData<List<Recipe>> recipes;
-    private ApiInterface apiInterface = ApiClient.getCLient().create(ApiInterface.class);;
+    private ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
     public LiveData<List<Recipe>> getRecipes() {
         if (recipes == null) {

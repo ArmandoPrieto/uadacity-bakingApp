@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.squareup.picasso.Picasso;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
-import com.udacity.bakingapp.widget.BakingAppWidgetIntentService;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +48,7 @@ public class RecipeListActivity extends AppCompatActivity {
         BakingViewModel model = ViewModelProviders.of(this).get(BakingViewModel.class);
         model.getRecipes().observe(this, recipes -> {
             recipeList.clear();
-            recipes.forEach(recipe -> recipeList.add(recipe));
+            recipeList.addAll(recipes);
             mAdapter.notifyDataSetChanged();
         });
     }
@@ -79,17 +78,14 @@ public class RecipeListActivity extends AppCompatActivity {
 
         private final RecipeListActivity mParentActivity;
         private final List<Recipe> mValues;
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Recipe item = (Recipe) view.getTag();
-                Context context = view.getContext();
-                Intent intent = new Intent(context, StepListActivity.class);
-                intent.putExtra(StepListActivity.ARG_RECIPE_ID, String.valueOf(item.getId()));
-                intent.putExtra(StepListActivity.ARG_RECIPE_TITLE, item.getName());
-                context.startActivity(intent);
+        private final View.OnClickListener mOnClickListener = view -> {
+            Recipe item = (Recipe) view.getTag();
+            Context context = view.getContext();
+            Intent intent = new Intent(context, StepListActivity.class);
+            intent.putExtra(StepListActivity.ARG_RECIPE_ID, String.valueOf(item.getId()));
+            intent.putExtra(StepListActivity.ARG_RECIPE_TITLE, item.getName());
+            context.startActivity(intent);
 
-            }
         };
 
         RecipeListRecyclerViewAdapter(RecipeListActivity parent,

@@ -1,6 +1,5 @@
 package com.udacity.bakingapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,24 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.viewModel.BakingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * An activity representing a list of Items. This activity
@@ -58,7 +49,7 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if(this.getIntent().hasExtra(ARG_RECIPE_TITLE)) {
             toolbar.setTitle(this.getIntent().getStringExtra(ARG_RECIPE_TITLE));
         }else{
@@ -80,7 +71,7 @@ public class StepListActivity extends AppCompatActivity implements StepListRecyc
                         .findFirst()
                         .ifPresent(recipe -> mItem = recipe);
                 mStepList.clear();
-                mItem.getSteps().forEach(step -> mStepList.add(step));
+                mStepList.addAll(mItem.getSteps());
                 mStepListAdapter.notifyDataSetChanged();
                 if (appBarLayout != null) {
                     appBarLayout.setTitle(mItem.getName());

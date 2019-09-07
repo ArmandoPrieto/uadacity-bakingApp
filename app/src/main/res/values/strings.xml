@@ -3,11 +3,13 @@
     <string name="title_recipe_detail">Recipe Detail</string>
     <string name="label_servings">Servings</string>
     <string name="title_activity_recipe_list">Recipe List</string>
-    <string name="title_recipedetail_list">recipeDetails</string>
-    <string name="title_recipedetail_detail">recipeDetail Detail</string>
     <string name="thumbnail">thumbnail</string>
-    <string name="appwidget_text">Baking App</string>
-    <string name="add_widget">Add widget</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_video">Error playing video</string>
+    <string name="baking_image">baking_image</string>
+    <string name="next_recipe">Next recipe</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="ingredient_1">Ingredient 1</string>
+    <string name="ingredients">Ingredients</string>
+
 </resources>
